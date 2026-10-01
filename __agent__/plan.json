@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "title": "Survey project structure and instructions",
+      "status": "done"
+    },
+    {
+      "title": "Trace the main application flow and integrations",
+      "status": "done"
+    },
+    {
+      "title": "Summarize architecture, behavior, and notable gaps",
+      "status": "done"
+    }
+  ],
+  "updated_at": "2026-10-01T05:25:17.101Z",
+  "session_id": "01a0f5e1-6a8b-76e7-9e03-8d36038233fe"
+}

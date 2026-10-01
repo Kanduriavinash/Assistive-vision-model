@@ -1,0 +1,30 @@
+﻿
+# Virtual Environment
+venv/
+env/
+
+# Python Cache
+__pycache__/
+*.pyc
+
+# Heavy Models and Checkpoints
+*.pt
+blip_vizwiz_vqa_best/
+models/
+runs/
+output/
+
+# Data
+data/
+test_images/
+
+# Security (NEVER commit keys)
+server.key
+server.crt
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+

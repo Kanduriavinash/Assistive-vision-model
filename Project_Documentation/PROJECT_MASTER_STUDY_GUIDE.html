@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master Study & Presentation Guide — Multimodal Assistive Vision System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0b0f19;
+      --bg-secondary: #131b2e;
+      --bg-card: #1a233a;
+      --bg-accent: #212e4d;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent-blue: #38bdf8;
+      --accent-purple: #a855f7;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      line-height: 1.65;
+      padding: 0;
+      margin: 0;
+    }
+
+    /* Top Navigation Banner */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      background: rgba(11, 15, 25, 0.85);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1.25rem;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-blue);
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 5rem;
+    }
+
+    /* Header Hero */
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem 4rem;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 3.5rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.35rem 0.9rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.25rem;
+    }
+
+    .badge-blue {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-blue);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .hero h1 {
+      font-size: 2.75rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 800px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .meta-tags {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .meta-tag {
+      background: var(--bg-secondary);
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    /* Section Headings */
+    .section-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-subtitle {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+
+    /* Grid Layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 3.5rem;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.75rem;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: #fff;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Model Cards */
+    .model-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .model-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .model-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .model-arch {
+      font-size: 0.85rem;
+      color: var(--accent-purple);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .model-role {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      flex-grow: 1;
+    }
+
+    .model-specs {
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      padding: 0.75rem;
+      font-size: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: #cbd5e1;
+    }
+
+    .model-specs div {
+      margin-bottom: 0.25rem;
+    }
+    .model-specs div:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Speaker Cards */
+    .speaker-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .speaker-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .speaker-name {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--accent-blue);
+    }
+
+    .speaker-time {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--accent-blue);
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+
+    .speaker-topic {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #fff;
+      margin-bottom: 0.75rem;
+    }
+
+    .speaker-bullets {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    .speaker-bullets li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.6rem;
+      font-size: 0.95rem;
+      color: #cbd5e1;
+    }
+
+    .speaker-bullets li::before {
+      content: '👉';
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 0.85rem;
+    }
+
+    .script-quote {
+      background: rgba(168, 85, 247, 0.08);
+      border-left: 4px solid var(--accent-purple);
+      padding: 1rem 1.25rem;
+      border-radius: 0 8px 8px 0;
+      margin-top: 1rem;
+      font-style: italic;
+      color: #e2e8f0;
+      font-size: 0.95rem;
+    }
+
+    /* Tables */
+    .table-container {
+      overflow-x: auto;
+      margin-bottom: 3.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.92rem;
+      background: var(--bg-card);
+    }
+
+    th, td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+      background: var(--bg-secondary);
+      color: var(--accent-blue);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Q&A Accordion Style */
+    .qa-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .qa-question {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--accent-amber);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .qa-answer {
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .qa-answer strong {
+      color: #fff;
+    }
+
+    /* Callouts */
+    .callout {
+      padding: 1.25rem 1.5rem;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+      border-left: 4px solid;
+    }
+
+    .callout-blue {
+      background: rgba(56, 189, 248, 0.1);
+      border-color: var(--accent-blue);
+      color: #e0f2fe;
+    }
+
+    .callout-emerald {
+      background: rgba(16, 185, 129, 0.1);
+      border-color: var(--accent-emerald);
+      color: #d1fae5;
+    }
+
+    /* Code Blocks */
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 0.2em 0.4em;
+      border-radius: 4px;
+      color: var(--accent-blue);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 3rem 1rem;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation -->
+  <div class="top-nav">
+    <div class="nav-brand">
+      👁️ AVP Multimodal Assistive Vision
+    </div>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#six-models">6 Models</a>
+      <a href="#fusion">Fusion Layer</a>
+      <a href="#speakers">Team Script</a>
+      <a href="#vizwiz">VizWiz Results</a>
+      <a href="#defense">Professor Q&A</a>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- Hero Header -->
+    <header class="hero">
+      <span class="badge badge-blue">Course: 23CSE473 Neural Networks & Deep Learning</span>
+      <h1>Comprehensive Presentation & Study Guide</h1>
+      <p>Master knowledge base for the 4-member team on the Multimodal Spatial Assistive Vision System for Visually Impaired Navigation.</p>
+      
+      <div class="meta-tags">
+        <div class="meta-tag">🎓 <strong>Institution:</strong> Amrita Vishwa Vidyapeetham</div>
+        <div class="meta-tag">👥 <strong>Team:</strong> Avinash, Varsha, Mokshitha, Ajalya</div>
+        <div class="meta-tag">⏱️ <strong>Format:</strong> 10-Minute Slide Deck + Live Demo</div>
+      </div>
+    </header>
+
+    <!-- SECTION 1: THE CORE PROBLEM & BIG PICTURE -->
+    <section id="overview" style="margin-bottom: 4rem;">
+      <div class="section-title">🌍 1. The Core Problem Statement</div>
+      <div class="section-subtitle">Why we built this and why existing tools fail</div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>The Human Challenge</h3>
+          <p>Over <strong>2.2 Billion people worldwide</strong> suffer from vision impairment. Navigating unfamiliar environments poses grave dangers: drop-offs, low-hanging obstacles, fast vehicles, stairs, and unreadable signage.</p>
+          <p style="margin-top: 0.75rem;"><strong>80% of navigational cues</strong> (bus numbers, room labels, exit boards) are written text that traditional canes and acoustic beepers cannot interpret.</p>
+        </div>
+
+        <div class="card">
+          <h3>Why Existing Solutions Fail</h3>
+          <ul style="list-style-type: none; color: #cbd5e1; font-size: 0.92rem;">
+            <li style="margin-bottom: 0.5rem;">🦯 <strong>White Cane:</strong> Only detects ground obstacles upon physical touch. Cannot detect chest/head-height hazards or read text.</li>
+            <li style="margin-bottom: 0.5rem;">📡 <strong>Ultrasonic Cane:</strong> Beeps for proximity, but cannot tell <em>what</em> an object is (a curtain vs. a moving vehicle).</li>
+            <li style="margin-bottom: 0.5rem;">🐕 <strong>Guide Dogs:</strong> Expensive ($50k+), requires training, cannot read text.</li>
+            <li>📱 <strong>Be My Eyes:</strong> Requires human volunteers on live video and continuous high-speed internet.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-emerald">
+        <strong>💡 Our Solution:</strong> A unified, portable edge AI system combining <strong>6 Deep Learning Models</strong> with a custom <strong>Spatial Priority Fusion Engine</strong> to <em>See</em> obstacles, <em>Estimate</em> distance, <em>Read</em> signage, and <em>Speak</em> prioritized warnings in natural language.
+      </div>
+    </section>
+
+    <!-- SECTION 2: THE 6 DEEP LEARNING MODELS -->
+    <section id="six-models" style="margin-bottom: 4rem;">
+      <div class="section-title">🧠 2. The 6 Deep Learning Models Explained</div>
+      <div class="section-subtitle">Detailed architecture, deep learning foundations, and exact roles</div>
+
+      <div class="grid-3">
+        <!-- Model 1 -->
+        <div class="model-card">
+          <div>
+            <div class="model-number">Model 01</div>
+            <div class="model-name">YOLOv8 Nano</div>
+            <div class="model-arch">CNN (CSPDarknet + Feature Pyramid Network)</div>
+            <div class="model-role">Real-time 2D bounding box detection for physical obstacles (people, cars, chairs, doors, stairs, hazards).</div>
+          </div>
+          <div class="model-specs">
+            <div>• <strong>Params:</strong> 3.01 Million (6.2 MB)</div>
+            <div>• <strong>Loss:</strong> CIoU Box + BCE Class Loss</div>
+            <div>• <strong>Latency:</strong> ~90–140 ms (CPU)</div>
+          </div>
+        </div>
+
+        <!-- Model 2 -->
+        <div class="model-card">
+          <div>
+            <div class="model-number">Model 02</div>
+            <div class="model-name">CRAFT Text Detector</div>
+            <div class="model-arch">Deep CNN (VGG-16 Backbone)</div>
+            <div class="model-role">Stage 1 of EasyOCR. Generates pixel-level heatmaps for <em>Character Region Awareness</em> and text affinity.</div>
+          </div>
+          <div class="model-specs">
+            <div>• <strong>Output:</strong> 2D Gaussian heatmaps</div>
+            <div>• <strong>Loss:</strong> Mean Squared Error (MSE)</div>
+            <div>• <strong>Role:</strong> Finds WHERE text is located</div>
+          </div>
+        </div>
+
+        <!-- Model 3 -->
+        <div class="model-card">
+          <div>
+            <div class="model-number">Model 03</div>
+            <div class="model-name">CRNN Text Recognizer</div>
+            <div class="model-arch">CNN + Bidirectional LSTM + CTC</div>
+            <div class="model-role">Stage 2 of EasyOCR. Translates text bounding crops into character sequences without per-character slicing.</div>
+          </div>
+          <div class="model-specs">
+            <div>• <strong>Loss:</strong> Connectionist Temporal Classification (CTC)</div>
+            <div>• <strong>Sequence:</strong> BiLSTM (Left $\leftrightarrow$ Right)</div>
+            <div>• <strong>Role:</strong> Reads WHAT the text says</div>
+          </div>
+        </div>
+
+        <!-- Model 4 -->
+        <div class="model-card">
+          <div>
+            <div class="model-number">Model 04</div>
+            <div class="model-name">Depth Anything V2</div>
+            <div class="model-arch">Vision Transformer (DINOv2 ViT + DPT)</div>
+            <div class="model-role">Monocular relative depth estimation. Predicts dense pixel inverse-depth to determine obstacle proximity zones.</div>
+          </div>
+          <div class="model-specs">
+            <div>• <strong>Input:</strong> Single 2D RGB image</div>
+            <div>• <strong>Loss:</strong> Scale-Shift Invariant Loss</div>
+            <div>• <strong>Role:</strong> Estimates HOW CLOSE obstacles are</div>
+          </div>
+        </div>
+
+        <!-- Model 5 -->
+        <div class="model-card">
+          <div>
+            <div class="model-number">Model 05</div>
+            <div class="model-name">BLIP Transformer</div>
+            <div class="model-arch">Multimodal Vision-Language Transformer</div>
+            <div class="model-role">Provides holistic scene overview captions and answers user queries via Visual Question Answering (VQA).</div>
+          </div>
+          <div class="model-specs">
+            <div>• <strong>Backbone:</strong> ViT Encoder + Text Decoder</div>
+            <div>• <strong>Loss:</strong> Cross-Entropy Next-Token Loss</div>
+            <div>• <strong>Role:</strong> Contextual scene understanding</div>
+          </div>
+        </div>
+
+        <!-- Model 6 -->
+        <div class="model-card">
+          <div>
+            <div class="model-number">Model 06</div>
+            <div class="model-name">Neural TTS Engine</div>
+            <div class="model-arch">Neural Acoustic Synthesizer (gTTS / SAPI)</div>
+            <div class="model-role">Translates prioritized text alerts into clear, natural spoken voice guidance delivered through the user's earpiece.</div>
+          </div>
+          <div class="model-specs">
+            <div>• <strong>Input:</strong> Prioritized text prompt</div>
+            <div>• <strong>Output:</strong> 44.1kHz MP3 / PCM Audio</div>
+            <div>• <strong>Role:</strong> Audio user interface</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: THE MULTIMODAL FUSION LAYER -->
+    <section id="fusion" style="margin-bottom: 4rem;">
+      <div class="section-title">⚙️ 3. The Multimodal Spatial & Priority Fusion Layer</div>
+      <div class="section-subtitle">Our core custom contribution: Solving the Audio Clutter Problem</div>
+
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <h3>The Audio Clutter Problem</h3>
+        <p>If a camera perceives 10 objects and 20 text snippets, speaking everything at once produces chaos: <em>"person person chair bottle cup bus stop open exit..."</em></p>
+        <p style="margin-top: 0.5rem;">Our <strong>MultimodalFusionV2</strong> engine executes a 4-step arbitration pipeline to filter and format the most safety-critical alert:</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3 style="color: var(--accent-rose);">Zone 1: Critical Proximity (&lt; 1.5m)</h3>
+          <p><strong>Highest Priority.</strong> Triggers immediate collision warning: <em>"Caution! Chair 1.1m on your left."</em></p>
+        </div>
+        <div class="card">
+          <h3 style="color: var(--accent-amber);">Zone 2: Navigational Path (1.5m – 3.5m)</h3>
+          <p><strong>Secondary Priority.</strong> Gives directional awareness: <em>"Person ahead at 2.4 meters."</em></p>
+        </div>
+        <div class="card">
+          <h3 style="color: var(--accent-emerald);">Zone 3: Environmental Text</h3>
+          <p><strong>Informational.</strong> Reads prominent signage: <em>"Sign reads: Lab 204."</em></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: TEAM SPEAKER-BY-SPEAKER SCRIPT -->
+    <section id="speakers" style="margin-bottom: 4rem;">
+      <div class="section-title">🎤 4. Team 10-Minute Presentation Script & Talking Points</div>
+      <div class="section-subtitle">Exact slide allocation, cue lines, and speaking guides for each member</div>
+
+      <!-- Member 1: Avinash -->
+      <div class="speaker-card">
+        <div class="speaker-header">
+          <div>
+            <div class="speaker-name">1. Avinash (Lead Presenter)</div>
+            <div class="speaker-topic">Introduction, Problem Statement, System Overview & Conclusion</div>
+          </div>
+          <div class="speaker-time">0:00 - 2:30 & 8:30 - 10:00</div>
+        </div>
+        <ul class="speaker-bullets">
+          <li><strong>Slide 1 & 2:</strong> Introduce the team and open with the human challenge: 2.2 Billion visually impaired people worldwide.</li>
+          <li><strong>Slide 3 & 4:</strong> Highlight the gaps in white canes and acoustic sensors (no text reading, no obstacle categorization).</li>
+          <li><strong>Slide 5:</strong> Introduce our 6-Model System Architecture and explain how the pieces connect together.</li>
+          <li><strong>Transition:</strong> <em>"I will now hand over to Varsha to explain Model 1 and Model 4 for spatial obstacle detection and depth estimation."</em></li>
+          <li><strong>Slide 11 & 12 (at the end):</strong> Conclude with the Phase 2 live demo, benchmark results on the VizWiz dataset, and future edge deployment (Jetson Nano).</li>
+        </ul>
+        <div class="script-quote">
+          "Respected professors and colleagues, imagine closing your eyes and trying to walk across campus. A cane tells you when you hit a wall, but it cannot read the sign that says 'CAUTION: WET FLOOR'. Our project bridges this gap with real-time deep learning."
+        </div>
+      </div>
+
+      <!-- Member 2: Varsha -->
+      <div class="speaker-card">
+        <div class="speaker-header">
+          <div>
+            <div class="speaker-name">2. Varsha Vinod</div>
+            <div class="speaker-topic">Model 1 (YOLOv8 Object Detection) + Model 4 (Depth Anything V2)</div>
+          </div>
+          <div class="speaker-time">2:30 - 4:30 (2.0 mins)</div>
+        </div>
+        <ul class="speaker-bullets">
+          <li><strong>Slide 6:</strong> Explain <strong>YOLOv8 Nano</strong> CNN architecture (CSPDarknet backbone + Feature Pyramid Network neck + Decoupled anchor-free head).</li>
+          <li><strong>Why YOLOv8:</strong> Single forward pass, ultra-lightweight (3.0M params, 6.2 MB), running at ~100ms CPU for real-time safety.</li>
+          <li><strong>Slide 7:</strong> Explain <strong>Depth Anything V2</strong> (Vision Transformer). Explain how it predicts relative monocular depth without requiring dual stereo cameras or expensive LiDAR.</li>
+          <li><strong>Transition:</strong> <em>"Next, Mokshitha will explain Models 2 & 3 for scene text detection and recognition."</em></li>
+        </ul>
+        <div class="script-quote">
+          "YOLOv8 processes the frame in a single unified neural pass. Unlike older two-stage Faster R-CNN models that take 2-3 seconds per frame on CPU, YOLOv8 achieves 15-20 FPS. Paired with Depth Anything V2, we classify objects and determine whether they are in your immediate collision path."
+        </div>
+      </div>
+
+      <!-- Member 3: Mokshitha -->
+      <div class="speaker-card">
+        <div class="speaker-header">
+          <div>
+            <div class="speaker-name">3. Mokshitha Yarlagadda</div>
+            <div class="speaker-topic">Model 2 & 3 (EasyOCR: CRAFT Text Detector + CRNN Text Recognizer)</div>
+          </div>
+          <div class="speaker-time">4:30 - 6:30 (2.0 mins)</div>
+        </div>
+        <ul class="speaker-bullets">
+          <li><strong>Slide 8:</strong> Explain the 2-Stage OCR Pipeline: <strong>CRAFT</strong> (Detection) + <strong>CRNN</strong> (Recognition).</li>
+          <li><strong>CRAFT (Model 2):</strong> Uses a VGG-16 backbone to output 2D affinity heatmaps, locating individual character regions in distorted or curved text.</li>
+          <li><strong>CRNN (Model 3):</strong> Feeds the text crop into a CNN for feature extraction, a <strong>Bidirectional LSTM</strong> for character sequence modeling, and a <strong>CTC (Connectionist Temporal Classification) Loss</strong> layer to transcribe words without manual character segmentation.</li>
+          <li><strong>Transition:</strong> <em>"Now, Ajalya will explain our Vision-Language Model, Voice Synthesis, and the Fusion Layer."</em></li>
+        </ul>
+        <div class="script-quote">
+          "80% of navigational cues are text. EasyOCR separates this into two neural stages: CRAFT finds WHERE the text is using heatmaps, while CRNN uses a Bidirectional LSTM with CTC loss to read WHAT it says, even when the image is angled or blurry."
+        </div>
+      </div>
+
+      <!-- Member 4: Ajalya -->
+      <div class="speaker-card">
+        <div class="speaker-header">
+          <div>
+            <div class="speaker-name">4. Ajalya T M</div>
+            <div class="speaker-topic">Model 5 (BLIP VLM) + Model 6 (TTS) + Multimodal Fusion Layer</div>
+          </div>
+          <div class="speaker-time">6:30 - 8:30 (2.0 mins)</div>
+        </div>
+        <ul class="speaker-bullets">
+          <li><strong>Slide 9:</strong> Explain <strong>BLIP Transformer (Model 5)</strong> for high-level scene context and Visual Question Answering on the VizWiz VQA benchmark.</li>
+          <li><strong>Slide 10:</strong> Explain our <strong>Multimodal Spatial & Priority Fusion Engine</strong>. Detail how it combines 2D bounding boxes, depth maps, and OCR text into a single prioritized prompt.</li>
+          <li><strong>Model 6:</strong> Voice guidance engine converting prioritized warnings into spoken audio.</li>
+          <li><strong>Transition:</strong> <em>"I will now hand back to Avinash to present our live demo and empirical results."</em></li>
+        </ul>
+        <div class="script-quote">
+          "Our Fusion Layer is our core innovation. It prevents audio clutter by filtering low-confidence detections, clustering duplicates, and enforcing a safety-first priority hierarchy where close collision hazards always interrupt general background text."
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: VIZWIZ DATASET & TRAINING METRICS -->
+    <section id="vizwiz" style="margin-bottom: 4rem;">
+      <div class="section-title">📊 5. VizWiz Dataset & Empirical Training Results</div>
+      <div class="section-subtitle">Real metrics from domain adaptation fine-tuning on blind-user photography</div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Evaluation Metric</th>
+              <th>COCO Baseline</th>
+              <th>VizWiz Fine-Tuned (Our Model)</th>
+              <th>Improvement / Significance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Hazard Detection Recall</strong></td>
+              <td>63.3%</td>
+              <td><strong>95.1%</strong></td>
+              <td><span style="color: var(--accent-emerald); font-weight: 700;">+31.8% Gain</span> (Catches almost all trip hazards)</td>
+            </tr>
+            <tr>
+              <td><strong>Hazard mAP@50</strong></td>
+              <td>0.605</td>
+              <td><strong>0.909</strong></td>
+              <td>High precision on blurry / low-light scenes</td>
+            </tr>
+            <tr>
+              <td><strong>Training Dataset Partition</strong></td>
+              <td>Clean COCO images</td>
+              <td><strong>39,704 Real VizWiz Photos</strong></td>
+              <td>Trained on authentic blind-user motion blur & tilt</td>
+            </tr>
+            <tr>
+              <td><strong>VQA Benchmark</strong></td>
+              <td>None</td>
+              <td><strong>28,500+ QA Pairs (VizWiz-VQA)</strong></td>
+              <td>Evaluated with BLIP on real blind user queries</td>
+            </tr>
+            <tr>
+              <td><strong>Inference Latency (YOLO)</strong></td>
+              <td>180 ms (CPU)</td>
+              <td><strong>92.5 ms (CPU) / 8.2 ms (GPU)</strong></td>
+              <td>Real-time safety capable</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 6: TOUGH PROFESSOR DEFENSE Q&A -->
+    <section id="defense" style="margin-bottom: 4rem;">
+      <div class="section-title">🛡️ 6. Tough Professor Questions & Model Answers</div>
+      <div class="section-subtitle">What the evaluator will ask and how to answer with 100% technical authority</div>
+
+      <!-- Q1 -->
+      <div class="qa-box">
+        <div class="qa-question">❓ Q1: "Why YOLOv8 and not Faster R-CNN or SSD?"</div>
+        <div class="qa-answer">
+          <strong>Answer:</strong> "Faster R-CNN is a <em>two-stage detector</em> that uses a Region Proposal Network (RPN). On CPU, it takes 2.0 to 3.0 seconds per frame, which is too slow for real-time walking safety where obstacle warnings must be delivered in under 200ms. YOLOv8 is a <em>single-stage anchor-free CNN</em> that predicts bounding boxes and classes in one forward pass, executing in ~90ms on CPU and 8ms on GPU with 3.0M parameters."
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="qa-box">
+        <div class="qa-question">❓ Q2: "How does CRNN read words without segmenting each character?"</div>
+        <div class="qa-answer">
+          <strong>Answer:</strong> "CRNN solves the alignment problem using <strong>CTC (Connectionist Temporal Classification) Loss</strong>. The CNN extracts visual features, the Bidirectional LSTM outputs a probability distribution over characters for every vertical slice of the image, and the CTC layer collapses duplicate characters and blanks (e.g., <code>b-b-u-s-s</code> $\rightarrow$ <code>bus</code>) without requiring individual character annotations."
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="qa-box">
+        <div class="qa-question">❓ Q3: "How does Depth Anything V2 give distance without dual stereo cameras or LiDAR?"</div>
+        <div class="qa-answer">
+          <strong>Answer:</strong> "Depth Anything V2 is a <strong>Monocular Relative Depth Estimator</strong> built on a Vision Transformer (DINOv2) trained on 62 million diverse images. It learns geometric visual priors (linear perspective, atmospheric haze, relative object scale) to predict a continuous inverse-depth map $\frac{1}{d}$. We map this into discrete safety proximity zones: <em>Critical (&lt;1.5m)</em>, <em>Close (1.5–3.5m)</em>, and <em>Safe</em>."
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="qa-box">
+        <div class="qa-question">❓ Q4: "Why is the VizWiz dataset necessary instead of standard COCO?"</div>
+        <div class="qa-answer">
+          <strong>Answer:</strong> "Standard COCO images are taken by sighted photographers with centered framing, good lighting, and sharp focus. Real blind users take photos with <strong>severe motion blur, low light, finger occlusions, and non-canonical camera angles</strong>. Fine-tuning on VizWiz adapts the model's weights to handle these real-world distortions."
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="qa-box">
+        <div class="qa-question">❓ Q5: "What is your novel contribution if you are using pre-existing model architectures?"</div>
+        <div class="qa-answer">
+          <strong>Answer:</strong> "Our novel contribution is threefold: <strong>(1) The Multimodal Spatial & Priority Fusion Engine</strong> that arbitrates 6 models to solve audio clutter, <strong>(2) Domain adaptation on authentic VizWiz blind-user photography</strong> yielding 95.1% hazard recall, and <strong>(3) An end-to-end assistive pipeline</strong> integrating 2D detection, depth zoning, OCR, VQA, and speech on CPU-accessible edge hardware."
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <p>© 2026 Multimodal Assistive Vision Team | Department of Computer Science & Engineering | Amrita Vishwa Vidyapeetham</p>
+    <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #64748b;">Study Guide compiled for 23CSE473 Neural Networks and Deep Learning Review.</p>
+  </footer>
+
+</body>
+</html>
