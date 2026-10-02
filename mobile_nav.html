@@ -154,8 +154,9 @@
         <p id="narrative-text">Ready to start navigation. Point camera forward.</p>
     </div>
 
-    <div class="controls">
+        <div class="controls">
         <button id="btn-start" class="btn-start">🟢 START LIVE STREAM</button>
+        <button id="btn-resume" class="btn-start" style="display:none;">▶️ RESUME WARNINGS</button>
         <button id="btn-stop" class="btn-stop">🛑 STOP</button>
         <button id="btn-vqa" class="btn-vqa">🎤 ASK QUESTION</button>
     </div>
@@ -256,6 +257,9 @@
             }
         }
 
+        
+        const btnResume = document.getElementById('btn-resume');
+
         // Button Listeners
         btnStart.addEventListener('click', async () => {
             isActive = true;
@@ -276,16 +280,27 @@
                 btnVqa.style.display = 'none';
             }
         });
+        
+        btnResume.addEventListener('click', () => {
+            btnResume.style.display = 'none';
+            btnVqa.style.display = 'flex';
+            speak("Resuming active warnings.");
+            if (!intervalId) {
+                intervalId = setInterval(processFrame, 3000);
+            }
+        });
 
         btnStop.addEventListener('click', () => {
             isActive = false;
             clearInterval(intervalId);
+            intervalId = null;
             stopCamera();
             synth.cancel();
             
             btnStart.style.display = 'flex';
             btnStop.style.display = 'none';
             btnVqa.style.display = 'none';
+            btnResume.style.display = 'none';
             badgeSafe.style.display = 'none';
             badgeCritical.style.display = 'none';
             
@@ -297,16 +312,20 @@
         btnVqa.addEventListener('click', () => {
             if (!isActive) return;
             
-            // Pause regular processing
+            // Permanently pause regular processing until Resume is clicked
             clearInterval(intervalId);
-            synth.cancel();
+            intervalId = null;
+            synth.cancel(); // Silence current warnings
+            
+            // Swap VQA button for Resume button
+            btnVqa.style.display = 'none';
+            btnResume.style.display = 'flex';
             
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             
             if (SpeechRecognition) {
-                btnVqa.style.backgroundColor = '#ef4444';
-                btnVqa.innerHTML = '🎙️ LISTENING...';
                 speak("I am listening.");
+                narrativeText.textContent = "Listening to your question...";
                 
                 const recognition = new SpeechRecognition();
                 recognition.continuous = false;
@@ -319,31 +338,27 @@
                 };
                 
                 recognition.onerror = (e) => {
-                    // Fallback to text prompt if Mic fails (e.g. self-signed cert blocks it on iOS)
                     const fallbackQ = prompt("Microphone blocked. Please type your question:");
                     if (fallbackQ) {
                         executeVQA(fallbackQ);
                     } else {
-                        resetVqaBtn();
+                        narrativeText.textContent = "Question cancelled. Click Resume to continue.";
                     }
                 };
             } else {
-                // Browser doesn't support Speech API, use text prompt
                 const fallbackQ = prompt("Your browser does not support Voice. Type your question:");
                 if (fallbackQ) {
                     executeVQA(fallbackQ);
                 } else {
-                    resetVqaBtn();
+                    narrativeText.textContent = "Question cancelled. Click Resume to continue.";
                 }
             }
         });
         
         async function executeVQA(question) {
-            btnVqa.style.backgroundColor = '#3b82f6';
-            btnVqa.innerHTML = '🧠 THINKING...';
-            
             speak("Let me look.");
             narrativeText.textContent = `Q: ${question} ... Thinking...`;
+            statusConn.textContent = "VLM Processing...";
             
             const image = captureFrame();
             if(image) {
@@ -356,24 +371,13 @@
                     const data = await response.json();
                     speak(data.answer);
                     narrativeText.textContent = `A: ${data.answer}`;
+                    statusConn.textContent = "Click RESUME WARNINGS to continue walking.";
                 } catch(e) {
                     speak("Network error.");
                     narrativeText.textContent = "Error reaching VQA server.";
                 }
             }
-            
-            // Resume after 8 seconds to give time to hear the answer
-            setTimeout(() => {
-                resetVqaBtn();
-                intervalId = setInterval(processFrame, 3000);
-            }, 8000);
         }
-        
-        function resetVqaBtn() {
-            btnVqa.style.backgroundColor = '#3b82f6';
-            btnVqa.innerHTML = '🎤 ASK QUESTION';
-        }
-
-    </script>
+</script>
 </body>
 </html>
