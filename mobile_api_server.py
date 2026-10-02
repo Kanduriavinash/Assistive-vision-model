@@ -67,9 +67,6 @@ OCR_EVERY_N = 3
 
 def process_vqa(base64_jpeg, question):
     try:
-        import base64
-        import numpy as np
-        import cv2
         img_bytes = base64.b64decode(base64_jpeg)
         nparr = np.frombuffer(img_bytes, np.uint8)
         frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
@@ -200,7 +197,6 @@ class NavigationHandler(BaseHTTPRequestHandler):
             content_length = int(self.headers.get("Content-Length", 0))
             body = self.rfile.read(content_length)
             try:
-                import json
                 data = json.loads(body)
                 base64_img = data.get("image", "")
                 question = data.get("question", "What is in front of me?")
