@@ -638,17 +638,10 @@ elif app_mode == "📹 Live Navigation":
                         last_speech_t = now
 
                     # Render
-                    badge = "🚨 HAZARD" if hazards else "🟢 CLEAR"
-                    hud_ph.markdown(f"""
-                    <div class="stream-hud">
-                        <div class="dot-live"></div>
-                        <span><strong>LIVE</strong></span>
-                        <span>Status: <strong>{badge}</strong></span>
-                        <span>FPS: <strong>{fps:.1f}</strong></span>
-                        <span>Objects: <strong>{len(dets)}</strong></span>
-                    </div>
-                    """, unsafe_allow_html=True)
-
+                    if hazards:
+                        hud_ph.markdown(f'<div style="margin-bottom:10px;" class="badge-critical">⚠️ CRITICAL PROXIMITY - {hazards[0]["label"].upper()} ~{hazards[0]["distance"]}m {hazards[0]["position"]}</div>', unsafe_allow_html=True)
+                    else:
+                        hud_ph.markdown('<div style="margin-bottom:10px;" class="badge-safe">✅ PATHWAY CLEAR - No critical obstacles detected</div>', unsafe_allow_html=True)
                     frame_ph.image(cv2.cvtColor(ann_img, cv2.COLOR_BGR2RGB), caption="Live Detection", use_container_width=True)
                     if dc is not None:
                         depth_ph.image(cv2.cvtColor(dc, cv2.COLOR_BGR2RGB), caption="Depth Heatmap", use_container_width=True)
