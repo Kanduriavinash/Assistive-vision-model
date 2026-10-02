@@ -48,6 +48,15 @@ ocr_engine = OCRReader()
 depth_est = DepthEstimator()
 fusion = MultimodalFusionV2()
 
+try:
+    from vlm_context import VLMContext
+    vlm = VLMContext(load_transformer=True)
+    print("[VLMContext] BLIP loaded successfully.")
+except Exception as e:
+    print(f"[VLMContext] Warning: Could not load VLM: {e}")
+    vlm = None
+
+
 # OCR caching (run every Nth request to save latency)
 _ocr_cache = {"texts": [], "count": 0}
 OCR_EVERY_N = 3
@@ -55,6 +64,25 @@ OCR_EVERY_N = 3
 # ─────────────────────────────────────────────────────────────
 # Process a single frame
 # ─────────────────────────────────────────────────────────────
+
+def process_vqa(base64_jpeg, question):
+    try:
+        import base64
+        import numpy as np
+        import cv2
+        img_bytes = base64.b64decode(base64_jpeg)
+        nparr = np.frombuffer(img_bytes, np.uint8)
+        frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+        if frame is None:
+            return {"answer": "Could not decode image."}
+        if vlm:
+            ans = vlm.answer_question(frame, question)
+            return {"answer": ans}
+        else:
+            return {"answer": "BLIP model is not loaded on the server."}
+    except Exception as e:
+        return {"answer": f"Error: {e}"}
+
 def process_frame(base64_jpeg):
     """Decode base64 JPEG, run full perception pipeline, return result dict."""
     try:
@@ -163,6 +191,20 @@ class NavigationHandler(BaseHTTPRequestHandler):
                 data = json.loads(body)
                 base64_img = data.get("image", "")
                 result = process_frame(base64_img)
+                self._set_headers(200)
+                self.wfile.write(json.dumps(result).encode("utf-8"))
+            except Exception as e:
+                self._set_headers(500)
+                self.wfile.write(json.dumps({"error": str(e)}).encode("utf-8"))
+        elif self.path == "/api/vqa":
+            content_length = int(self.headers.get("Content-Length", 0))
+            body = self.rfile.read(content_length)
+            try:
+                import json
+                data = json.loads(body)
+                base64_img = data.get("image", "")
+                question = data.get("question", "What is in front of me?")
+                result = process_vqa(base64_img, question)
                 self._set_headers(200)
                 self.wfile.write(json.dumps(result).encode("utf-8"))
             except Exception as e:
