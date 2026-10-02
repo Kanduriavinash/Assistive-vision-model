@@ -562,18 +562,11 @@ elif app_mode == "📹 Live Navigation":
             wc_cooldown = st.slider("Speech Cooldown (sec):", 2.0, 8.0, 4.0, 0.5, key="wc_cd")
 
         st.markdown("---")
-        c_start, c_stop, c_desktop = st.columns([1, 1, 1.5])
+        c_start, c_stop = st.columns([1, 1])
         with c_start:
             start_btn = st.button("🟢 Start Live Stream", type="primary", use_container_width=True, key="wc_start")
         with c_stop:
             stop_btn = st.button("🔴 Stop Stream", use_container_width=True, key="wc_stop")
-        with c_desktop:
-            if st.button("🖥️ Launch Desktop Window (High FPS)", use_container_width=True, key="wc_desktop"):
-                try:
-                    subprocess.Popen([sys.executable, "live_cam_phase2.py"])
-                    st.toast("Launched standalone OpenCV window!", icon="✅")
-                except Exception as ex:
-                    st.error(f"Error: {ex}")
 
         # Session state for streaming
         if "webcam_active" not in st.session_state:
